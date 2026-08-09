@@ -1,0 +1,20 @@
+{
+  "name": "@meridian/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@fastify/cors": "^10.0.1",
+    "@meridian/contracts": "*",
+    "@meridian/core": "*",
+    "@meridian/database": "*",
+    "fastify": "^5.2.1",
+    "zod": "^3.24.1"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "start": "node dist/server.js"
+  }
+}
