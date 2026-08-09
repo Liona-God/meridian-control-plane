@@ -1,0 +1,46 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile.api
+    environment:
+      PORT: 4010
+      DATABASE_PATH: /data/meridian.db
+      CORS_ORIGIN: http://localhost:8080
+      MERIDIAN_WORKER_TOKEN: development-worker-token-change-me
+    ports:
+      - "4010:4010"
+    volumes:
+      - meridian-data:/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:4010/healthz').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+
+  worker:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile.worker
+    environment:
+      MERIDIAN_API_URL: http://api:4010
+      MERIDIAN_WORKER_TOKEN: development-worker-token-change-me
+    depends_on:
+      api:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile.web
+    ports:
+      - "8080:8080"
+    depends_on:
+      api:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp
+
+volumes:
+  meridian-data:
