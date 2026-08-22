@@ -1,13 +1,14 @@
 # Meridian Control Plane
 
-Meridian is a serious reference implementation for governing operational
+Meridian is a reference implementation for governing operational
 workflows. It couples a React control console with a multi-tenant API, a
 separate polling worker, durable local persistence, a PostgreSQL production
 schema, role checks, idempotent triggers, approval gates, audit events, and a
 transactional-outbox-shaped event model.
 
-It is designed as portfolio-grade systems code: the happy path is useful, but
-the important mechanics are explicit too.
+The product path and the operational mechanics behind it are both explicit.
+
+![Meridian guided demo showing workflows, approvals, and run detail](docs/meridian-console.png)
 
 ## What is in the monorepo
 
